@@ -12,21 +12,21 @@
 ///  limitations under the License.
 //import 'dart:html';
 import 'dart:html';
-import 'package:orion_users_client/base_client.dart';
+import 'package:orion_talk_client/base_client.dart';
 
-/// Web Socket client for Users microservice
+/// Web Socket client for Talk microservice
 class UsersWebSocket extends BaseClient {
   // the Web Socket Object from dart:html package
   WebSocket _websocket;
 
-  /// instatiate a UsersWebService object.
+  /// instatiate a TalkWebService object.
   /// [bool enableSecurity] indicates is the client will work with http or https
   ///
   /// [bool devMode] modify the service URL to operates in dev mode. In development
   /// mode, Open liberty modifies the service URL eliminating When we are the application
-  /// name orion-users-service
+  /// name orion-talk-service
   ///
-  /// [String tockenChannel] indicates the token a program (optional)
+  /// [String tockenChannel] indicates the token a channel (optional)
   UsersWebSocket(bool enableSecurity, bool devMode, [String tokenChannel])
       : super(enableSecurity, devMode) {
     token = tokenChannel;
@@ -37,17 +37,17 @@ class UsersWebSocket extends BaseClient {
     _websocket = WebSocket(socketURL + token);
   }
 
-  /// registers a [Function listener] of the connected
+  /// registers a [Function listener] of the connected channel
   void registerListener(Function listener) {
     _websocket.onMessage.listen(listener);
   }
 
-  /// sends a [String message] to a program
+  /// sends a [String message] to a channel
   void send(String message) {
     _websocket.send(message);
   }
 
-  /// closes the connection with a program
+  /// closes the connection with a channel
   void close() {
     _websocket.close();
   }

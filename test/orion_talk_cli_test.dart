@@ -10,13 +10,10 @@
 /// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 /// See the License for the specific language governing permissions and
 ///  limitations under the License.
+import 'package:test/test.dart';
 
-import 'package:orion_users_client/cli/cli.dart';
-
-void main(List<String> arguments) async {
-  var cli = UserCLI();
-  var loop = true;
-  while (loop) {
-    loop = await cli.menu();
-  }
+void main() {
+  test('calculate', () {
+    //expect(calculate(), 42);
+  });
 }

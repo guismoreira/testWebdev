@@ -1,5 +1,3 @@
-import 'dart:io';
-
 /// Copyright 2020 Orion Services
 /// Licensed under the Apache License, Version 2.0 (the "License");
 /// you may not use this file except in compliance with the License.
@@ -13,9 +11,8 @@ import 'dart:io';
 /// See the License for the specific language governing permissions and
 ///  limitations under the License.
 import 'package:http/http.dart' as http;
-import 'package:orion_users_client/base_client.dart';
+import 'package:orion_talk_client/base_client.dart';
 
-/// Web Service for User microservice
 class UsersWebService extends BaseClient {
   /// instatiate a UserWebService object.
   /// [bool enableSecurity] indicates is the client will work with http or https

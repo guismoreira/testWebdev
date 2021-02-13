@@ -12,33 +12,36 @@
 ///  limitations under the License.
 import 'dart:html';
 import 'dart:convert';
-import 'package:http/http.dart';
-import 'package:orion_users_client/web_service.dart';
-import 'package:orion_users_client/web_socket.dart';
+import 'package:orion_talk_client/web_service.dart';
+import 'package:orion_talk_client/web_socket.dart';
 
-/// methos main
 /// methos main
 void main() {
   WebClientExample();
 }
 
-/// Examples of how to use UsersWebService and UsersWebSocket clients in
+/// Examples of how to use TalkWebService and UsersWebSocket clients in
 /// simple Web page
 class WebClientExample {
-  /// Users Web Service client
+  /// Talk Web Service client
   UsersWebService _userWS;
 
-  /// Users Web Socket client
+  /// Talk Web Socket client
   UsersWebSocket _userSocket;
 
   WebClientExample() {
-    // instantiating the users web service client
+    // instantiating the talk web service client
     _userWS = UsersWebService(getSecureValue(), getDevelopmentValue());
+    _userSocket = UsersWebSocket(getSecureValue(), getDevelopmentValue());
 
     // adding buttons listeners
     // Web Service
     querySelector('#btnCreate').onClick.listen(createUserHandler);
-    querySelector('#btnDelete').onClick.listen(deleteUserHandler);
+
+    // Web socket
+    querySelector('#btnSocketConnect').onClick.listen(socketConnectHandler);
+    querySelector('#btnSocketSend').onClick.listen(socketSendMessageHandler);
+    querySelector('#btnSocketClose').onClick.listen(socketCloseHandler);
 
     // adding checkboxes listeners to change service URL to run with secure
     // connection and dev mode
@@ -67,27 +70,33 @@ class WebClientExample {
     }
   }
 
-  void deleteUserHandler(MouseEvent event) async {
-    // geting the user data
-    var id = (querySelector('#idDelete') as InputElement).value;
-
-    String data;
-    try {
-      // create a user in users service
-      var response = await _userWS.deleteUser(id);
-      data = json.decode(response.body)['id'];
-    } on Exception {
-      data = 'connection refused';
-    } finally {
-      // setting the return data to HTML screen
-      appendNode(data);
-    }
+  /// Handles the [MouseEvent event] of the button to connect with a
+  /// Web Socket channel
+  void socketConnectHandler(MouseEvent event) {
+    // Geting the token of a channel from input text and
+    // setting the token to Talk Web Socket client
+    _userSocket.token = (querySelector('#channel') as InputElement).value;
+    _userSocket.connect(_userSocket.token);
+    _userSocket.registerListener(socketListener);
   }
 
-  //  String getPortValue() {
-  //   var port = (querySelector('#port') as InputElement).value;
-  //   return (port == '') ? '9081' : port;
-  // }
+  /// Handles the [MouseEvent event] of the button to send a message to a
+  /// Web Socket channel
+  void socketSendMessageHandler(MouseEvent event) {
+    var message = (querySelector('#sendMessage') as InputElement).value;
+    _userSocket.send(message);
+  }
+
+  /// Handles the [MouseEvent event] of the button to close a connect with a channel
+  /// through a web socket
+  void socketCloseHandler(MouseEvent event) {
+    _userSocket.close();
+  }
+
+  /// listens the [MessageEvent event] through Web Socket channel
+  void socketListener(MessageEvent event) {
+    appendNode(event.data);
+  }
 
   /// Handles the [MouseEvent] of the checkboxes
   void urlHandler(MouseEvent event) {

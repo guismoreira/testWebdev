@@ -1,3 +1,3 @@
-# Orion Users Client
+# Orion Talk Client
 
-Orion Users Client is a library to provide access to Orion User Service.
+Orion Talk Client is a library to provide access to Orion Talk Service.
