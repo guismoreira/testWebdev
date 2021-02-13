@@ -11,7 +11,7 @@
 <style>
         body {
         font-family: Arial, Helvetica, sans-serif;
-        background-color: black;
+        background-color: rgb(255, 206, 206);
         }
 
         * {
@@ -93,9 +93,26 @@
 
     <button id="btnCreate" class="registerbtn">Register</button>
   </div>
-  
-
 </form>
+
+
+<br><br><br>
+<b>Configurations</b>:
+Secure:      <input type="checkbox" id="secure" value="false">
+Development: <input type="checkbox" id="development" value="true" checked>
+<br><br><br>
+<label for="host"><b>Host</b></label>
+<input type="text" placeholder="host" name="name" id="host" >
+
+<label for="port"><b>Port</b></label>
+<input type="text" placeholder="port" name="email" id="port" >
+<button id="btnChangeHost">configure</button>
+
+<br/><br/><br/>
+Output:
+<div id="output"></div>
+<br/><br/><br/>
+
 
 </body>
 </html>
